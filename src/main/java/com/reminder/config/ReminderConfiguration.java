@@ -1,31 +1,32 @@
 package com.reminder.config;
 
+import com.reminder.scheduler.ReminderScheduler;
+import com.reminder.service.ReminderEmailService;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.sql.DataSource;
 
 @EnableJpaRepositories("com.reminder.repository")
 @EntityScan("com.reminder.model")
+@EnableScheduling
 @Configuration
 public class ReminderConfiguration {
 
-//    @Bean(name = "entityManagerFactory")
-//    public LocalSessionFactoryBean sessionFactory() {
-//        return new LocalSessionFactoryBean();
-//    }
-//
-//    @Bean
-//    public DataSource datasource() {
-//        return DataSourceBuilder.create()
-//                .driverClassName("com.mysql.cj.jdbc.Driver")
-//                .url("jdbc:mysql://localhost:3306/testdb")
-//                .username("root")
-//                .password("root")
-//                .build();
-//    }
+    @Bean("reminderScheduler")
+    public ReminderScheduler reminderScheduler() {
+        return new ReminderScheduler();
+    }
+
+    @Bean
+    public ReminderEmailService reminderEmailService() {
+        return new ReminderEmailService();
+    }
+
+
 }

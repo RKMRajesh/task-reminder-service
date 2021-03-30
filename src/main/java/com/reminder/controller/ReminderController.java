@@ -33,7 +33,7 @@ public class ReminderController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Reminder> createReminder(@Valid @RequestBody Reminder reminder) {
         LOG.info("Received request to create Reminder:{}", reminder);
-        Reminder newReminder = reminderRepository.save(reminder);
+        Reminder newReminder = reminderRepository.save(reminder); //storing into DB
         LOG.info("A new Reminder object is saved.");
         ResponseEntity<Reminder> responseEntity = new ResponseEntity<>(newReminder, HttpStatus.CREATED);
         return responseEntity;
@@ -76,6 +76,7 @@ public class ReminderController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // combines all the error messages and displays them together
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
